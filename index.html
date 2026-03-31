@@ -5,140 +5,166 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Kcal — AI Calorie Tracker</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:opsz,wght@9..40,400;9..40,500&display=swap" rel="stylesheet">
 <style>
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-:root {
-  --bg: #F7F5F0; --surface: #FFFFFF; --surface2: #F0EDE6; --border: #E2DDD4;
-  --text: #1A1816; --muted: #7A756E; --accent: #2D5A3D; --accent-light: #E8F2EB;
-  --accent-mid: #4A8C5C; --danger: #C0392B; --warn: #E67E22;
-  --radius: 12px; --radius-sm: 8px; --shadow: 0 1px 3px rgba(0,0,0,0.06), 0 4px 16px rgba(0,0,0,0.04);
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#F7F5F0;--surface:#FFFFFF;--surface2:#F0EDE6;--border:#E2DDD4;
+  --text:#1A1816;--muted:#7A756E;--accent:#2D5A3D;--accent-light:#E8F2EB;
+  --danger:#C0392B;--warn:#E67E22;
+  --radius:12px;--radius-sm:8px;--shadow:0 1px 3px rgba(0,0,0,.06),0 4px 16px rgba(0,0,0,.04)
 }
-@media (prefers-color-scheme: dark) {
-  :root {
-    --bg: #141210; --surface: #1E1C19; --surface2: #282520; --border: #333028;
-    --text: #EDE9E3; --muted: #8A867F; --accent: #5BAD74; --accent-light: #1A2E1F;
-    --danger: #E05C4F; --warn: #F0913A;
-  }
-}
-body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; line-height: 1.5; }
-.shell { display: flex; height: 100vh; overflow: hidden; }
-.sidebar { width: 260px; flex-shrink: 0; background: var(--surface); border-right: 1px solid var(--border); display: flex; flex-direction: column; overflow-y: auto; padding-bottom: 1.5rem; }
-.main { flex: 1; overflow-y: auto; padding: 2rem; }
-.logo { padding: 1.5rem 1.25rem 1rem; border-bottom: 1px solid var(--border); margin-bottom: 0.5rem; }
-.logo h1 { font-family: 'DM Serif Display', serif; font-size: 24px; color: var(--accent); letter-spacing: -0.5px; }
-.logo p { font-size: 11px; color: var(--muted); margin-top: 2px; text-transform: uppercase; letter-spacing: 0.3px; }
-.nav-section { padding: 0.75rem 1rem 0.25rem; font-size: 10px; text-transform: uppercase; letter-spacing: 0.8px; color: var(--muted); font-weight: 500; }
-.nav-btn { display: flex; align-items: center; gap: 10px; padding: 0.55rem 1.25rem; font-size: 14px; color: var(--muted); cursor: pointer; border: none; background: none; width: 100%; text-align: left; transition: color 0.15s, background 0.15s; font-family: 'DM Sans', sans-serif; }
-.nav-btn:hover { color: var(--text); background: var(--surface2); }
-.nav-btn.active { color: var(--accent); background: var(--accent-light); font-weight: 500; }
-.nav-btn .icon { width: 18px; text-align: center; font-size: 14px; }
-.api-section { margin-top: auto; padding: 1rem 1.25rem 0; border-top: 1px solid var(--border); }
-.api-label { font-size: 10px; text-transform: uppercase; letter-spacing: 0.8px; color: var(--muted); margin-bottom: 0.4rem; font-weight: 500; }
-.api-input { width: 100%; padding: 0.45rem 0.6rem; font-size: 12px; border: 1px solid var(--border); border-radius: var(--radius-sm); background: var(--surface2); color: var(--text); font-family: 'DM Sans', sans-serif; outline: none; }
-.api-input:focus { border-color: var(--accent); }
-.api-status { font-size: 11px; color: var(--muted); margin-top: 4px; }
-.api-status.ok { color: var(--accent); }
-.api-status.err { color: var(--danger); }
-.view { display: none; }
-.view.active { display: block; }
-.page-header { margin-bottom: 1.5rem; }
-.page-header h2 { font-family: 'DM Serif Display', serif; font-size: 26px; font-weight: 400; }
-.page-header p { font-size: 13px; color: var(--muted); margin-top: 3px; }
-.date-nav { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1.5rem; }
-.date-nav button { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 0.4rem 0.75rem; font-size: 13px; cursor: pointer; color: var(--text); font-family: 'DM Sans', sans-serif; transition: background 0.15s; }
-.date-nav button:hover { background: var(--surface2); }
-.date-nav .date-label { font-size: 15px; font-weight: 500; min-width: 140px; text-align: center; }
-.stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 1rem; margin-bottom: 1.5rem; }
-.stat-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 1rem 1.25rem; }
-.stat-label { font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; color: var(--muted); font-weight: 500; }
-.stat-value { font-family: 'DM Serif Display', serif; font-size: 28px; margin-top: 2px; }
-.stat-sub { font-size: 11px; color: var(--muted); margin-top: 2px; }
-.calorie-bar-wrap { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 1rem 1.25rem; margin-bottom: 1.5rem; }
-.calorie-bar-header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 0.6rem; }
-.calorie-bar-header span { font-size: 13px; color: var(--muted); }
-.calorie-bar-header strong { font-size: 13px; }
-.calorie-bar-track { height: 8px; background: var(--surface2); border-radius: 99px; overflow: hidden; }
-.calorie-bar-fill { height: 100%; border-radius: 99px; background: var(--accent); transition: width 0.4s ease, background 0.3s; }
-.log-section-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem; }
-.log-section-header h3 { font-size: 14px; font-weight: 500; }
-.log-entry { display: flex; align-items: center; gap: 0.75rem; padding: 0.75rem 0; border-bottom: 1px solid var(--border); }
-.log-entry:last-child { border-bottom: none; }
-.log-thumb { width: 48px; height: 48px; border-radius: var(--radius-sm); object-fit: cover; background: var(--surface2); flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: 20px; color: var(--muted); overflow: hidden; }
-.log-thumb img { width: 100%; height: 100%; object-fit: cover; }
-.log-info { flex: 1; min-width: 0; }
-.log-name { font-size: 14px; font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.log-meta { font-size: 12px; color: var(--muted); }
-.log-cals { font-family: 'DM Serif Display', serif; font-size: 18px; flex-shrink: 0; }
-.log-del { background: none; border: none; color: var(--muted); cursor: pointer; font-size: 14px; padding: 4px; border-radius: 4px; transition: color 0.15s; flex-shrink: 0; }
-.log-del:hover { color: var(--danger); }
-.upload-zone { border: 2px dashed var(--border); border-radius: var(--radius); padding: 2.5rem; text-align: center; cursor: pointer; transition: border-color 0.2s, background 0.2s; background: var(--surface); margin-bottom: 1.5rem; }
-.upload-zone:hover, .upload-zone.drag { border-color: var(--accent); background: var(--accent-light); }
-.upload-zone .upload-icon { font-size: 36px; margin-bottom: 0.75rem; }
-.upload-zone h3 { font-size: 15px; font-weight: 500; margin-bottom: 0.25rem; }
-.upload-zone p { font-size: 13px; color: var(--muted); }
-#file-input { display: none; }
-.preview-wrap { position: relative; margin-bottom: 1.5rem; display: none; }
-.preview-wrap img { width: 100%; max-height: 320px; object-fit: cover; border-radius: var(--radius); border: 1px solid var(--border); }
-.preview-clear { position: absolute; top: 10px; right: 10px; background: rgba(0,0,0,0.5); color: white; border: none; border-radius: 50%; width: 28px; height: 28px; cursor: pointer; font-size: 14px; display: flex; align-items: center; justify-content: center; }
-.result-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.25rem; margin-bottom: 1rem; display: none; }
-.result-card h3 { font-size: 16px; font-weight: 500; margin-bottom: 0.25rem; }
-.result-cals { font-family: 'DM Serif Display', serif; font-size: 32px; color: var(--accent); }
-.result-cals span { font-family: 'DM Sans', sans-serif; font-size: 14px; color: var(--muted); font-weight: 400; }
-.result-note { font-size: 13px; color: var(--muted); margin-top: 0.5rem; line-height: 1.5; }
-.macro-row { display: flex; gap: 0.75rem; margin-top: 0.75rem; flex-wrap: wrap; }
-.macro-pill { background: var(--surface2); border-radius: 99px; padding: 3px 12px; font-size: 12px; color: var(--muted); }
-.macro-pill strong { color: var(--text); }
-.btn { display: inline-flex; align-items: center; gap: 6px; padding: 0.55rem 1.1rem; font-size: 13px; font-weight: 500; border-radius: var(--radius-sm); border: 1px solid var(--border); background: var(--surface); color: var(--text); cursor: pointer; font-family: 'DM Sans', sans-serif; transition: background 0.15s, border-color 0.15s; text-decoration: none; }
-.btn:hover { background: var(--surface2); }
-.btn-primary { background: var(--accent); border-color: var(--accent); color: white; }
-.btn-primary:hover { opacity: 0.9; }
-.btn-primary:disabled { opacity: 0.5; cursor: not-allowed; }
-.btn-row { display: flex; gap: 0.5rem; flex-wrap: wrap; }
-.loading-bar { height: 3px; background: var(--surface2); border-radius: 99px; overflow: hidden; margin: 1rem 0; display: none; }
-.loading-bar-fill { height: 100%; width: 35%; background: var(--accent); border-radius: 99px; animation: slide 1.4s ease-in-out infinite; }
-@keyframes slide { 0% { transform: translateX(-100%); } 100% { transform: translateX(400%); } }
-.saved-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 1rem; }
-.saved-meal-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; transition: box-shadow 0.15s, transform 0.15s; }
-.saved-meal-card:hover { box-shadow: var(--shadow); transform: translateY(-2px); }
-.saved-meal-img { height: 120px; background: var(--surface2); display: flex; align-items: center; justify-content: center; font-size: 36px; overflow: hidden; }
-.saved-meal-img img { width: 100%; height: 100%; object-fit: cover; }
-.saved-meal-info { padding: 0.75rem; }
-.saved-meal-name { font-size: 14px; font-weight: 500; }
-.saved-meal-cals { font-size: 12px; color: var(--muted); margin-top: 2px; }
-.saved-meal-actions { display: flex; gap: 0.4rem; margin-top: 0.6rem; }
-.saved-meal-actions button { flex: 1; padding: 0.3rem; font-size: 11px; border: 1px solid var(--border); border-radius: 6px; background: var(--surface2); cursor: pointer; color: var(--text); font-family: 'DM Sans', sans-serif; transition: background 0.15s; }
-.saved-meal-actions button:hover { background: var(--accent-light); color: var(--accent); }
-.saved-meal-actions .del-btn:hover { background: #FEE; color: var(--danger); }
-.settings-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1.25rem; }
-.field { margin-bottom: 1rem; }
-.field label { display: block; font-size: 12px; color: var(--muted); margin-bottom: 0.3rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.4px; }
-.field input, .field select { width: 100%; padding: 0.55rem 0.75rem; font-size: 14px; border: 1px solid var(--border); border-radius: var(--radius-sm); background: var(--surface); color: var(--text); font-family: 'DM Sans', sans-serif; outline: none; transition: border-color 0.15s; }
-.field input:focus { border-color: var(--accent); }
-.history-day { margin-bottom: 1.5rem; }
-.history-day-header { display: flex; justify-content: space-between; align-items: baseline; padding-bottom: 0.5rem; border-bottom: 1px solid var(--border); margin-bottom: 0.5rem; }
-.history-day-header h3 { font-size: 14px; font-weight: 500; }
-.history-day-header span { font-size: 13px; color: var(--muted); }
-.toast { position: fixed; bottom: 1.5rem; right: 1.5rem; background: var(--text); color: var(--bg); padding: 0.6rem 1.1rem; border-radius: var(--radius-sm); font-size: 13px; font-weight: 500; z-index: 1000; opacity: 0; transform: translateY(8px); transition: opacity 0.2s, transform 0.2s; pointer-events: none; }
-.toast.show { opacity: 1; transform: translateY(0); }
-.empty { text-align: center; padding: 3rem 1.5rem; color: var(--muted); }
-.empty .icon { font-size: 40px; margin-bottom: 1rem; }
-.empty p { font-size: 14px; }
-.card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); box-shadow: var(--shadow); }
-.inline-form { display: flex; gap: 0.5rem; align-items: flex-end; flex-wrap: wrap; }
-.inline-form .field { margin-bottom: 0; flex: 1; min-width: 110px; }
-@media (max-width: 500px) {
-  .shell { flex-direction: column; }
-  .sidebar { width: 100%; flex-direction: row; overflow-x: auto; overflow-y: hidden; padding: 0; border-right: none; border-bottom: 1px solid var(--border); height: auto; flex-shrink: 0; }
-  .logo, .nav-section, .api-section { display: none; }
-  .nav-btn { padding: 0.75rem 1rem; white-space: nowrap; font-size: 12px; }
-  .main { padding: 1.25rem; height: calc(100vh - 52px); overflow-y: auto; }
-  .settings-grid { grid-template-columns: 1fr; }
+@media(prefers-color-scheme:dark){:root{
+  --bg:#141210;--surface:#1E1C19;--surface2:#282520;--border:#333028;
+  --text:#EDE9E3;--muted:#8A867F;--accent:#5BAD74;--accent-light:#1A2E1F;
+  --danger:#E05C4F;--warn:#F0913A
+}}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;line-height:1.5}
+.shell{display:flex;height:100vh;overflow:hidden}
+
+/* ── SIDEBAR ── */
+.sidebar{width:260px;flex-shrink:0;background:var(--surface);border-right:1px solid var(--border);display:flex;flex-direction:column;overflow-y:auto;padding-bottom:1.5rem}
+.main{flex:1;overflow-y:auto;padding:2rem}
+.logo{padding:1.5rem 1.25rem 1rem;border-bottom:1px solid var(--border);margin-bottom:.5rem}
+.logo h1{font-family:'DM Serif Display',serif;font-size:24px;color:var(--accent)}
+.logo p{font-size:11px;color:var(--muted);margin-top:2px;text-transform:uppercase;letter-spacing:.3px}
+.nav-section{padding:.75rem 1rem .25rem;font-size:10px;text-transform:uppercase;letter-spacing:.8px;color:var(--muted);font-weight:500}
+.nav-btn{display:flex;align-items:center;gap:10px;padding:.55rem 1.25rem;font-size:14px;color:var(--muted);cursor:pointer;border:none;background:none;width:100%;text-align:left;transition:color .15s,background .15s;font-family:'DM Sans',sans-serif}
+.nav-btn:hover{color:var(--text);background:var(--surface2)}
+.nav-btn.active{color:var(--accent);background:var(--accent-light);font-weight:500}
+.nav-btn .icon{width:18px;text-align:center;font-size:14px}
+.api-section{margin-top:auto;padding:1rem 1.25rem 0;border-top:1px solid var(--border)}
+.api-label{font-size:10px;text-transform:uppercase;letter-spacing:.8px;color:var(--muted);margin-bottom:.4rem;font-weight:500}
+.api-inp{width:100%;padding:.45rem .6rem;font-size:12px;border:1px solid var(--border);border-radius:var(--radius-sm);background:var(--surface2);color:var(--text);font-family:'DM Sans',sans-serif;outline:none}
+.api-inp:focus{border-color:var(--accent)}
+.api-st{font-size:11px;color:var(--muted);margin-top:4px}
+.api-st.ok{color:var(--accent)}.api-st.err{color:var(--danger)}
+
+/* ── SHARED ── */
+.view{display:none}.view.active{display:block}
+.page-header{margin-bottom:1.5rem}
+.page-header h2{font-family:'DM Serif Display',serif;font-size:26px;font-weight:400}
+.page-header p{font-size:13px;color:var(--muted);margin-top:3px}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow)}
+.btn{display:inline-flex;align-items:center;gap:6px;padding:.55rem 1.1rem;font-size:13px;font-weight:500;border-radius:var(--radius-sm);border:1px solid var(--border);background:var(--surface);color:var(--text);cursor:pointer;font-family:'DM Sans',sans-serif;transition:background .15s;text-decoration:none}
+.btn:hover{background:var(--surface2)}
+.btn-primary{background:var(--accent);border-color:var(--accent);color:#fff}
+.btn-primary:hover{opacity:.9}
+.btn-primary:disabled{opacity:.5;cursor:not-allowed}
+.btn-row{display:flex;gap:.5rem;flex-wrap:wrap}
+.field{margin-bottom:1rem}
+.field label{display:block;font-size:12px;color:var(--muted);margin-bottom:.3rem;font-weight:500;text-transform:uppercase;letter-spacing:.4px}
+.field input{width:100%;padding:.55rem .75rem;font-size:14px;border:1px solid var(--border);border-radius:var(--radius-sm);background:var(--surface);color:var(--text);font-family:'DM Sans',sans-serif;outline:none;transition:border-color .15s}
+.field input:focus{border-color:var(--accent)}
+.empty{text-align:center;padding:3rem 1.5rem;color:var(--muted)}
+.empty .icon{font-size:40px;margin-bottom:1rem}
+.empty p{font-size:14px}
+
+/* ── DASHBOARD ── */
+.date-nav{display:flex;align-items:center;gap:.75rem;margin-bottom:1.5rem}
+.date-nav button{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-sm);padding:.4rem .75rem;font-size:13px;cursor:pointer;color:var(--text);font-family:'DM Sans',sans-serif;transition:background .15s}
+.date-nav button:hover{background:var(--surface2)}
+.date-nav .date-label{font-size:15px;font-weight:500;min-width:140px;text-align:center}
+.stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:1rem;margin-bottom:1.5rem}
+.stat-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:1rem 1.25rem}
+.stat-label{font-size:11px;text-transform:uppercase;letter-spacing:.5px;color:var(--muted);font-weight:500}
+.stat-value{font-family:'DM Serif Display',serif;font-size:28px;margin-top:2px}
+.stat-sub{font-size:11px;color:var(--muted);margin-top:2px}
+.cal-bar-wrap{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:1rem 1.25rem;margin-bottom:1.5rem}
+.cal-bar-head{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:.6rem}
+.cal-bar-head span{font-size:13px;color:var(--muted)}.cal-bar-head strong{font-size:13px}
+.cal-bar-track{height:8px;background:var(--surface2);border-radius:99px;overflow:hidden}
+.cal-bar-fill{height:100%;border-radius:99px;background:var(--accent);transition:width .4s ease,background .3s}
+.log-section-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:.75rem}
+.log-section-header h3{font-size:14px;font-weight:500}
+.log-entry{display:flex;align-items:center;gap:.75rem;padding:.75rem 0;border-bottom:1px solid var(--border)}
+.log-entry:last-child{border-bottom:none}
+.log-thumb{width:48px;height:48px;border-radius:var(--radius-sm);background:var(--surface2);flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:20px;color:var(--muted);overflow:hidden}
+.log-thumb img{width:100%;height:100%;object-fit:cover}
+.log-info{flex:1;min-width:0}
+.log-name{font-size:14px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.log-meta{font-size:12px;color:var(--muted)}
+.log-cals{font-family:'DM Serif Display',serif;font-size:18px;flex-shrink:0}
+.log-del{background:none;border:none;color:var(--muted);cursor:pointer;font-size:14px;padding:4px;border-radius:4px;transition:color .15s;flex-shrink:0}
+.log-del:hover{color:var(--danger)}
+
+/* ── UPLOAD / LOG MEAL ── */
+.upload-zone{border:2px dashed var(--border);border-radius:var(--radius);padding:2.5rem;text-align:center;cursor:pointer;transition:border-color .2s,background .2s;background:var(--surface);margin-bottom:1.5rem}
+.upload-zone:hover,.upload-zone.drag{border-color:var(--accent);background:var(--accent-light)}
+.upload-zone .upload-icon{font-size:36px;margin-bottom:.75rem}
+.upload-zone h3{font-size:15px;font-weight:500;margin-bottom:.25rem}
+.upload-zone p{font-size:13px;color:var(--muted)}
+#file-input{display:none}
+
+/* multi-image strip */
+.img-strip{display:flex;gap:.6rem;flex-wrap:wrap;margin-bottom:1.5rem}
+.img-thumb-wrap{position:relative;width:90px;height:90px;flex-shrink:0}
+.img-thumb-wrap img{width:100%;height:100%;object-fit:cover;border-radius:var(--radius-sm);border:1px solid var(--border);display:block}
+.img-thumb-remove{position:absolute;top:-6px;right:-6px;width:20px;height:20px;border-radius:50%;background:var(--danger);color:#fff;border:none;cursor:pointer;font-size:11px;display:flex;align-items:center;justify-content:center;line-height:1}
+.add-more-btn{width:90px;height:90px;border:2px dashed var(--border);border-radius:var(--radius-sm);background:none;cursor:pointer;color:var(--muted);font-size:24px;display:flex;align-items:center;justify-content:center;transition:border-color .2s,color .2s;flex-shrink:0}
+.add-more-btn:hover{border-color:var(--accent);color:var(--accent)}
+
+.result-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:1.25rem;margin-bottom:1rem;display:none}
+.result-card h3{font-size:16px;font-weight:500;margin-bottom:.25rem}
+.result-cals{font-family:'DM Serif Display',serif;font-size:32px;color:var(--accent)}
+.result-cals span{font-family:'DM Sans',sans-serif;font-size:14px;color:var(--muted);font-weight:400}
+.result-note{font-size:13px;color:var(--muted);margin-top:.5rem;line-height:1.5}
+.macro-row{display:flex;gap:.75rem;margin-top:.75rem;flex-wrap:wrap}
+.macro-pill{background:var(--surface2);border-radius:99px;padding:3px 12px;font-size:12px;color:var(--muted)}
+.macro-pill strong{color:var(--text)}
+.loading-bar{height:3px;background:var(--surface2);border-radius:99px;overflow:hidden;margin:1rem 0;display:none}
+.loading-bar-fill{height:100%;width:35%;background:var(--accent);border-radius:99px;animation:slide 1.4s ease-in-out infinite}
+@keyframes slide{0%{transform:translateX(-100%)}100%{transform:translateX(400%)}}
+.inline-form{display:flex;gap:.5rem;align-items:flex-end;flex-wrap:wrap}
+.inline-form .field{margin-bottom:0;flex:1;min-width:110px}
+
+/* ── SAVED ── */
+.saved-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:1rem}
+.saved-meal-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;transition:box-shadow .15s,transform .15s}
+.saved-meal-card:hover{box-shadow:var(--shadow);transform:translateY(-2px)}
+.saved-meal-img{height:120px;background:var(--surface2);display:flex;align-items:center;justify-content:center;font-size:36px;overflow:hidden}
+.saved-meal-img img{width:100%;height:100%;object-fit:cover}
+.saved-meal-info{padding:.75rem}
+.saved-meal-name{font-size:14px;font-weight:500}
+.saved-meal-cals{font-size:12px;color:var(--muted);margin-top:2px}
+.saved-meal-actions{display:flex;gap:.4rem;margin-top:.6rem}
+.saved-meal-actions button{flex:1;padding:.3rem;font-size:11px;border:1px solid var(--border);border-radius:6px;background:var(--surface2);cursor:pointer;color:var(--text);font-family:'DM Sans',sans-serif;transition:background .15s}
+.saved-meal-actions button:hover{background:var(--accent-light);color:var(--accent)}
+.saved-meal-actions .del-btn:hover{background:#fee;color:var(--danger)}
+
+/* ── HISTORY ── */
+.history-day{margin-bottom:1.5rem}
+.history-day-header{display:flex;justify-content:space-between;align-items:baseline;padding-bottom:.5rem;border-bottom:1px solid var(--border);margin-bottom:.5rem}
+.history-day-header h3{font-size:14px;font-weight:500}
+.history-day-header span{font-size:13px;color:var(--muted)}
+
+/* ── GOALS ── */
+.settings-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1.25rem}
+
+/* ── TOAST ── */
+.toast{position:fixed;bottom:1.5rem;right:1.5rem;background:var(--text);color:var(--bg);padding:.6rem 1.1rem;border-radius:var(--radius-sm);font-size:13px;font-weight:500;z-index:1000;opacity:0;transform:translateY(8px);transition:opacity .2s,transform .2s;pointer-events:none}
+.toast.show{opacity:1;transform:translateY(0)}
+
+/* ── MOBILE ── */
+.mobile-api-box{display:none;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:1rem 1.25rem;margin-bottom:1.5rem}
+.mobile-api-box .api-label{display:block;font-size:11px;text-transform:uppercase;letter-spacing:.8px;color:var(--muted);margin-bottom:.4rem;font-weight:500}
+.mobile-api-box .api-inp{font-size:14px;padding:.55rem .75rem}
+
+@media(max-width:500px){
+  .shell{flex-direction:column}
+  .sidebar{width:100%;flex-direction:row;overflow-x:auto;overflow-y:hidden;padding:0;border-right:none;border-bottom:1px solid var(--border);height:auto;flex-shrink:0}
+  .logo,.nav-section,.api-section{display:none}
+  .nav-btn{padding:.75rem 1rem;white-space:nowrap;font-size:12px}
+  .main{padding:1.25rem;height:calc(100vh - 52px);overflow-y:auto}
+  .settings-grid{grid-template-columns:1fr}
+  .mobile-api-box{display:block}
 }
 </style>
 </head>
 <body>
 <div class="shell">
+
+  <!-- SIDEBAR -->
   <aside class="sidebar">
     <div class="logo">
       <h1>kcal</h1>
@@ -153,18 +179,28 @@ body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--t
     <button class="nav-btn" onclick="showView('goals')"><span class="icon">◎</span> Goals</button>
     <div class="api-section">
       <div class="api-label">Anthropic API Key</div>
-      <input class="api-input" type="password" id="api-key-input" placeholder="sk-ant-..." oninput="saveApiKey(this.value)">
-      <div class="api-status" id="api-status">Enter your key to enable AI</div>
+      <input class="api-inp" type="password" id="api-key-input" placeholder="sk-ant-..." oninput="saveApiKey(this.value)">
+      <div class="api-st" id="api-status">Enter your key to enable AI</div>
     </div>
   </aside>
 
+  <!-- MAIN -->
   <main class="main">
-    <!-- DASHBOARD -->
+
+    <!-- ── DASHBOARD ── -->
     <div id="view-dashboard" class="view active">
       <div class="page-header">
-        <h2 style="font-family:'DM Serif Display',serif;font-size:26px;font-weight:400">Today's intake</h2>
-        <p id="dash-date" style="font-size:13px;color:var(--muted);margin-top:3px"></p>
+        <h2>Today's intake</h2>
+        <p id="dash-date"></p>
       </div>
+
+      <!-- Mobile API box (only visible on small screens via CSS) -->
+      <div class="mobile-api-box">
+        <label class="api-label">Anthropic API Key</label>
+        <input class="api-inp" type="password" id="mobile-api-input" placeholder="sk-ant-..." oninput="saveApiKey(this.value)">
+        <div class="api-st" id="mobile-api-status">Enter your key to enable AI photo analysis</div>
+      </div>
+
       <div class="date-nav">
         <button onclick="changeDay(-1)">← Prev</button>
         <span class="date-label" id="nav-date-label"></span>
@@ -176,9 +212,9 @@ body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--t
         <div class="stat-card"><div class="stat-label">Carbs</div><div class="stat-value" id="stat-carbs">0g</div><div class="stat-sub">macro</div></div>
         <div class="stat-card"><div class="stat-label">Fat</div><div class="stat-value" id="stat-fat">0g</div><div class="stat-sub">macro</div></div>
       </div>
-      <div class="calorie-bar-wrap">
-        <div class="calorie-bar-header"><span>Daily progress</span><strong id="bar-label">0 / 2000 kcal</strong></div>
-        <div class="calorie-bar-track"><div class="calorie-bar-fill" id="cal-bar" style="width:0%"></div></div>
+      <div class="cal-bar-wrap">
+        <div class="cal-bar-head"><span>Daily progress</span><strong id="bar-label">0 / 2000 kcal</strong></div>
+        <div class="cal-bar-track"><div class="cal-bar-fill" id="cal-bar" style="width:0%"></div></div>
       </div>
       <div class="card" style="padding:1.25rem">
         <div class="log-section-header">
@@ -189,31 +225,40 @@ body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--t
       </div>
     </div>
 
-    <!-- LOG MEAL -->
+    <!-- ── LOG MEAL ── -->
     <div id="view-log" class="view">
       <div class="page-header">
-        <h2 style="font-family:'DM Serif Display',serif;font-size:26px;font-weight:400">Log a meal</h2>
-        <p style="font-size:13px;color:var(--muted);margin-top:3px">Take or upload a photo — Claude will estimate the calories</p>
+        <h2>Log a meal</h2>
+        <p>Upload one or more photos — Claude analyses them together</p>
       </div>
-      <div class="upload-zone" id="upload-zone" onclick="document.getElementById('file-input').click()" ondragover="handleDrag(event,true)" ondragleave="handleDrag(event,false)" ondrop="handleDrop(event)">
-        <input type="file" id="file-input" accept="image/*" onchange="handleFileSelect(event)">
+
+      <!-- Upload zone (shown when no images yet) -->
+      <div class="upload-zone" id="upload-zone"
+           onclick="document.getElementById('file-input').click()"
+           ondragover="handleDrag(event,true)" ondragleave="handleDrag(event,false)" ondrop="handleDrop(event)">
+        <input type="file" id="file-input" accept="image/*" multiple onchange="handleFileSelect(event)">
         <div class="upload-icon">📷</div>
-        <h3>Upload or take a photo</h3>
-        <p>Drag &amp; drop, click to browse, or use your camera</p>
+        <h3>Upload photos of your meal</h3>
+        <p>Drag &amp; drop, click to browse, or select multiple files<br>Great for meals spread across several dishes</p>
       </div>
-      <div class="preview-wrap" id="preview-wrap">
-        <img id="preview-img" src="" alt="meal preview">
-        <button class="preview-clear" onclick="clearPreview()">✕</button>
+
+      <!-- Image strip (shown after images added) -->
+      <div id="img-strip-wrap" style="display:none;margin-bottom:1.5rem">
+        <div class="img-strip" id="img-strip"></div>
       </div>
+
       <div class="field" id="context-field" style="display:none">
         <label>Add context (optional)</label>
         <input type="text" id="meal-context" placeholder="e.g. large portion, added butter, restaurant meal…">
       </div>
+
       <div class="btn-row" id="analyze-row" style="display:none;margin-bottom:1rem">
         <button class="btn btn-primary" id="analyze-btn" onclick="analyzeMeal()">✦ Analyse with AI</button>
-        <button class="btn" onclick="clearPreview()">Clear</button>
+        <button class="btn" onclick="clearImages()">Clear all</button>
       </div>
+
       <div class="loading-bar" id="loading-bar"><div class="loading-bar-fill"></div></div>
+
       <div class="result-card" id="result-card">
         <h3 id="result-name"></h3>
         <div class="result-cals"><span id="result-cals-num"></span> <span>kcal</span></div>
@@ -230,8 +275,9 @@ body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--t
         </div>
       </div>
 
+      <!-- Manual entry -->
       <div style="margin-top:2rem;padding-top:1.5rem;border-top:1px solid var(--border)">
-        <h3 style="font-size:14px;font-weight:500;margin-bottom:0.75rem">Or add manually</h3>
+        <h3 style="font-size:14px;font-weight:500;margin-bottom:.75rem">Or add manually</h3>
         <div class="inline-form">
           <div class="field"><label>Meal name</label><input type="text" id="manual-name" placeholder="Chicken sandwich"></div>
           <div class="field" style="max-width:110px"><label>Calories</label><input type="number" id="manual-cals" placeholder="450" min="0"></div>
@@ -243,29 +289,29 @@ body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--t
       </div>
     </div>
 
-    <!-- SAVED MEALS -->
+    <!-- ── SAVED MEALS ── -->
     <div id="view-saved" class="view">
       <div class="page-header">
-        <h2 style="font-family:'DM Serif Display',serif;font-size:26px;font-weight:400">Saved meals</h2>
-        <p style="font-size:13px;color:var(--muted);margin-top:3px">Your frequently eaten meals for quick logging</p>
+        <h2>Saved meals</h2>
+        <p>Your frequently eaten meals for quick logging</p>
       </div>
       <div id="saved-grid" class="saved-grid"></div>
     </div>
 
-    <!-- HISTORY -->
+    <!-- ── HISTORY ── -->
     <div id="view-history" class="view">
       <div class="page-header">
-        <h2 style="font-family:'DM Serif Display',serif;font-size:26px;font-weight:400">History</h2>
-        <p style="font-size:13px;color:var(--muted);margin-top:3px">Your recent days</p>
+        <h2>History</h2>
+        <p>Your recent days</p>
       </div>
       <div id="history-list"></div>
     </div>
 
-    <!-- GOALS -->
+    <!-- ── GOALS ── -->
     <div id="view-goals" class="view">
       <div class="page-header">
-        <h2 style="font-family:'DM Serif Display',serif;font-size:26px;font-weight:400">Goals &amp; settings</h2>
-        <p style="font-size:13px;color:var(--muted);margin-top:3px">Personalise your daily targets</p>
+        <h2>Goals &amp; settings</h2>
+        <p>Personalise your daily targets</p>
       </div>
       <div class="card" style="padding:1.5rem;max-width:520px">
         <div class="settings-grid">
@@ -277,45 +323,62 @@ body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--t
         <button class="btn btn-primary" onclick="saveGoals()">Save goals</button>
       </div>
     </div>
+
   </main>
 </div>
 <div class="toast" id="toast"></div>
 
 <script>
+// ─────────────────────────────────────────
+// STATE
+// ─────────────────────────────────────────
 let state = {
-  apiKey: '', goals: { calories: 2000, protein: 150, carbs: 250, fat: 70 },
-  log: {}, saved: [], currentDate: todayStr(), pendingMeal: null, pendingImageB64: null
+  apiKey: '',
+  goals: { calories: 2000, protein: 150, carbs: 250, fat: 70 },
+  log: {},
+  saved: [],
+  currentDate: todayStr(),
+  pendingMeal: null,
+  pendingImages: []   // array of base64 data URLs
 };
 
 function todayStr() { return new Date().toISOString().split('T')[0]; }
 
 function loadState() {
   try {
-    const s = localStorage.getItem('kcal-v1');
+    const s = localStorage.getItem('kcal-v2');
     if (s) { const p = JSON.parse(s); state = { ...state, ...p }; }
   } catch(e) {}
   state.currentDate = todayStr();
+  state.pendingImages = [];
+  state.pendingMeal = null;
 }
 
 function saveState() {
-  localStorage.setItem('kcal-v1', JSON.stringify({
+  localStorage.setItem('kcal-v2', JSON.stringify({
     apiKey: state.apiKey, goals: state.goals, log: state.log, saved: state.saved
   }));
 }
 
+// ─────────────────────────────────────────
+// NAVIGATION
+// ─────────────────────────────────────────
 function showView(name) {
   document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
   document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
   document.getElementById('view-' + name).classList.add('active');
   document.querySelectorAll('.nav-btn').forEach(b => {
-    if (b.getAttribute('onclick') && b.getAttribute('onclick').includes("'" + name + "'")) b.classList.add('active');
+    if ((b.getAttribute('onclick') || '').includes("'" + name + "'")) b.classList.add('active');
   });
   if (name === 'dashboard') renderDashboard();
-  if (name === 'saved') renderSaved();
-  if (name === 'history') renderHistory();
-  if (name === 'goals') renderGoals();
+  if (name === 'saved')     renderSaved();
+  if (name === 'history')   renderHistory();
+  if (name === 'goals')     renderGoals();
 }
 
+// ─────────────────────────────────────────
+// DATE
+// ─────────────────────────────────────────
 function changeDay(d) {
   const dt = new Date(state.currentDate + 'T12:00:00');
   dt.setDate(dt.getDate() + d);
@@ -332,14 +395,22 @@ function fmtDate(str) {
   return d.toLocaleDateString('en-GB', { weekday: 'long', day: 'numeric', month: 'long' });
 }
 
+// ─────────────────────────────────────────
+// DASHBOARD
+// ─────────────────────────────────────────
 function calcTotals(entries) {
-  return entries.reduce((a, e) => ({ calories: a.calories + (e.calories||0), protein: a.protein + (e.protein||0), carbs: a.carbs + (e.carbs||0), fat: a.fat + (e.fat||0) }), { calories:0, protein:0, carbs:0, fat:0 });
+  return entries.reduce((a, e) => ({
+    calories: a.calories + (e.calories || 0),
+    protein:  a.protein  + (e.protein  || 0),
+    carbs:    a.carbs    + (e.carbs    || 0),
+    fat:      a.fat      + (e.fat      || 0)
+  }), { calories: 0, protein: 0, carbs: 0, fat: 0 });
 }
 
-function esc(s) { return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
-
 function renderDashboard() {
-  const entries = state.log[state.currentDate] || [], t = calcTotals(entries), g = state.goals;
+  const entries = state.log[state.currentDate] || [];
+  const t = calcTotals(entries), g = state.goals;
+
   document.getElementById('dash-date').textContent = fmtDate(state.currentDate);
   document.getElementById('nav-date-label').textContent = fmtDate(state.currentDate);
   document.getElementById('stat-cals').textContent = Math.round(t.calories);
@@ -347,11 +418,13 @@ function renderDashboard() {
   document.getElementById('stat-carbs').textContent = Math.round(t.carbs) + 'g';
   document.getElementById('stat-fat').textContent = Math.round(t.fat) + 'g';
   document.getElementById('stat-cals-goal').textContent = 'of ' + g.calories + ' goal';
+
   const pct = Math.min((t.calories / g.calories) * 100, 110);
   const bar = document.getElementById('cal-bar');
   bar.style.width = Math.min(pct, 100) + '%';
   bar.style.background = pct > 105 ? 'var(--danger)' : pct > 85 ? 'var(--warn)' : 'var(--accent)';
   document.getElementById('bar-label').textContent = Math.round(t.calories) + ' / ' + g.calories + ' kcal';
+
   const logEl = document.getElementById('today-log');
   if (!entries.length) {
     logEl.innerHTML = '<div class="empty"><div class="icon">🍽</div><p>No meals logged yet.<br>Use Log Meal to get started.</p></div>';
@@ -362,7 +435,7 @@ function renderDashboard() {
       <div class="log-thumb">${e.image ? '<img src="' + e.image + '" alt="">' : '🍽'}</div>
       <div class="log-info">
         <div class="log-name">${esc(e.name)}</div>
-        <div class="log-meta">${e.time || ''}${e.protein ? ' &middot; P:' + Math.round(e.protein) + 'g C:' + Math.round(e.carbs) + 'g F:' + Math.round(e.fat) + 'g' : ''}</div>
+        <div class="log-meta">${e.time || ''}${e.protein ? ' · P:' + Math.round(e.protein) + 'g C:' + Math.round(e.carbs) + 'g F:' + Math.round(e.fat) + 'g' : ''}</div>
       </div>
       <div class="log-cals">${Math.round(e.calories)}</div>
       <button class="log-del" onclick="deleteEntry('${state.currentDate}',${i})">✕</button>
@@ -375,58 +448,100 @@ function deleteEntry(date, i) {
   saveState(); renderDashboard(); toast('Entry removed');
 }
 
-function handleDrag(e, over) { e.preventDefault(); document.getElementById('upload-zone').classList.toggle('drag', over); }
+// ─────────────────────────────────────────
+// IMAGE HANDLING (multi-image)
+// ─────────────────────────────────────────
+function handleDrag(e, over) {
+  e.preventDefault();
+  document.getElementById('upload-zone').classList.toggle('drag', over);
+}
 
 function handleDrop(e) {
-  e.preventDefault(); handleDrag(e, false);
-  const f = e.dataTransfer.files[0];
-  if (f && f.type.startsWith('image/')) processFile(f);
+  e.preventDefault();
+  handleDrag(e, false);
+  addFiles(Array.from(e.dataTransfer.files).filter(f => f.type.startsWith('image/')));
 }
 
-function handleFileSelect(e) { if (e.target.files[0]) processFile(e.target.files[0]); }
-
-function processFile(file) {
-  const reader = new FileReader();
-  reader.onload = ev => {
-    state.pendingImageB64 = ev.target.result;
-    document.getElementById('preview-img').src = ev.target.result;
-    document.getElementById('preview-wrap').style.display = 'block';
-    document.getElementById('upload-zone').style.display = 'none';
-    document.getElementById('analyze-row').style.display = 'flex';
-    document.getElementById('context-field').style.display = 'block';
-    document.getElementById('result-card').style.display = 'none';
-  };
-  reader.readAsDataURL(file);
+function handleFileSelect(e) {
+  addFiles(Array.from(e.target.files));
+  e.target.value = ''; // reset so same file can be re-added
 }
 
-function clearPreview() {
-  state.pendingImageB64 = null; state.pendingMeal = null;
-  document.getElementById('preview-wrap').style.display = 'none';
-  document.getElementById('upload-zone').style.display = 'block';
-  document.getElementById('analyze-row').style.display = 'none';
-  document.getElementById('context-field').style.display = 'none';
+function addFiles(files) {
+  files.forEach(file => {
+    const reader = new FileReader();
+    reader.onload = ev => {
+      state.pendingImages.push(ev.target.result);
+      renderImageStrip();
+    };
+    reader.readAsDataURL(file);
+  });
+}
+
+function removeImage(idx) {
+  state.pendingImages.splice(idx, 1);
+  renderImageStrip();
+}
+
+function renderImageStrip() {
+  const stripWrap = document.getElementById('img-strip-wrap');
+  const strip = document.getElementById('img-strip');
+  const hasImages = state.pendingImages.length > 0;
+
+  document.getElementById('upload-zone').style.display = hasImages ? 'none' : 'block';
+  stripWrap.style.display = hasImages ? 'block' : 'none';
+  document.getElementById('analyze-row').style.display = hasImages ? 'flex' : 'none';
+  document.getElementById('context-field').style.display = hasImages ? 'block' : 'none';
   document.getElementById('result-card').style.display = 'none';
-  document.getElementById('loading-bar').style.display = 'none';
-  document.getElementById('file-input').value = '';
-  document.getElementById('meal-context').value = '';
+
+  strip.innerHTML = state.pendingImages.map((src, i) => `
+    <div class="img-thumb-wrap">
+      <img src="${src}" alt="meal photo ${i+1}">
+      <button class="img-thumb-remove" onclick="removeImage(${i})">✕</button>
+    </div>`).join('') +
+    `<button class="add-more-btn" onclick="document.getElementById('file-input').click()" title="Add more photos">+</button>`;
 }
 
+function clearImages() {
+  state.pendingImages = [];
+  state.pendingMeal = null;
+  renderImageStrip();
+  document.getElementById('meal-context').value = '';
+  document.getElementById('loading-bar').style.display = 'none';
+}
+
+// ─────────────────────────────────────────
+// AI ANALYSIS
+// ─────────────────────────────────────────
 async function analyzeMeal() {
   if (!state.apiKey) { toast('Please enter your API key first'); return; }
-  if (!state.pendingImageB64) return;
+  if (!state.pendingImages.length) return;
+
   const btn = document.getElementById('analyze-btn');
   btn.disabled = true;
   document.getElementById('loading-bar').style.display = 'block';
   document.getElementById('result-card').style.display = 'none';
+
   const context = document.getElementById('meal-context').value;
-  const b64 = state.pendingImageB64.split(',')[1];
-  const mimeM = state.pendingImageB64.match(/data:([^;]+)/);
-  const mime = mimeM ? mimeM[1] : 'image/jpeg';
-  const prompt = `You are a nutrition expert. Analyse this meal photo and estimate its nutritional content.
+  const count = state.pendingImages.length;
+
+  // Build content array: all images then the text prompt
+  const content = state.pendingImages.map(dataUrl => {
+    const b64 = dataUrl.split(',')[1];
+    const mimeM = dataUrl.match(/data:([^;]+)/);
+    const mime = mimeM ? mimeM[1] : 'image/jpeg';
+    return { type: 'image', source: { type: 'base64', media_type: mime, data: b64 } };
+  });
+
+  const prompt = `You are a nutrition expert. I am sharing ${count} photo${count > 1 ? 's' : ''} of a meal${count > 1 ? ' (different angles or dishes of the same meal)' : ''}.
 ${context ? 'Additional context: ' + context : ''}
+Analyse all photos together and estimate the TOTAL nutritional content for the entire meal shown.
 Respond ONLY with a JSON object (no markdown, no explanation) in this exact format:
-{"name":"short meal name","calories":450,"protein":30,"carbs":45,"fat":15,"confidence":"medium","note":"brief explanation of estimates and assumptions"}
+{"name":"short meal name","calories":450,"protein":30,"carbs":45,"fat":15,"confidence":"medium","note":"brief explanation of your estimates and any key assumptions"}
 Round all numbers to the nearest integer. Be realistic and accurate.`;
+
+  content.push({ type: 'text', text: prompt });
+
   try {
     const res = await fetch('https://api.anthropic.com/v1/messages', {
       method: 'POST',
@@ -439,17 +554,18 @@ Round all numbers to the nearest integer. Be realistic and accurate.`;
       body: JSON.stringify({
         model: 'claude-sonnet-4-20250514',
         max_tokens: 600,
-        messages: [{ role: 'user', content: [
-          { type: 'image', source: { type: 'base64', media_type: mime, data: b64 } },
-          { type: 'text', text: prompt }
-        ]}]
+        messages: [{ role: 'user', content }]
       })
     });
+
     const data = await res.json();
     if (data.error) throw new Error(data.error.message);
+
     const raw = data.content.map(c => c.text || '').join('').trim().replace(/```json|```/g, '').trim();
     const meal = JSON.parse(raw);
-    state.pendingMeal = { ...meal, image: state.pendingImageB64 };
+
+    state.pendingMeal = { ...meal, image: state.pendingImages[0] };
+
     document.getElementById('result-name').textContent = meal.name;
     document.getElementById('result-cals-num').textContent = Math.round(meal.calories);
     document.getElementById('r-protein').textContent = Math.round(meal.protein) + 'g';
@@ -457,6 +573,7 @@ Round all numbers to the nearest integer. Be realistic and accurate.`;
     document.getElementById('r-fat').textContent = Math.round(meal.fat) + 'g';
     document.getElementById('result-note').textContent = meal.note || '';
     document.getElementById('result-card').style.display = 'block';
+
   } catch(err) {
     toast('Error: ' + err.message);
   } finally {
@@ -467,9 +584,15 @@ Round all numbers to the nearest integer. Be realistic and accurate.`;
 
 function editCalories() {
   const v = prompt('Edit calorie count:', state.pendingMeal.calories);
-  if (v && !isNaN(v)) { state.pendingMeal.calories = parseInt(v); document.getElementById('result-cals-num').textContent = Math.round(state.pendingMeal.calories); }
+  if (v && !isNaN(v)) {
+    state.pendingMeal.calories = parseInt(v);
+    document.getElementById('result-cals-num').textContent = Math.round(state.pendingMeal.calories);
+  }
 }
 
+// ─────────────────────────────────────────
+// LOGGING
+// ─────────────────────────────────────────
 function addEntry(date, entry) {
   if (!state.log[date]) state.log[date] = [];
   state.log[date].push(entry);
@@ -478,15 +601,32 @@ function addEntry(date, entry) {
 
 function logCurrentMeal() {
   if (!state.pendingMeal) return;
-  addEntry(state.currentDate, { name: state.pendingMeal.name, calories: state.pendingMeal.calories, protein: state.pendingMeal.protein, carbs: state.pendingMeal.carbs, fat: state.pendingMeal.fat, image: state.pendingMeal.image, time: new Date().toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit'}) });
-  clearPreview(); showView('dashboard'); toast('Meal logged!');
+  addEntry(state.currentDate, {
+    name: state.pendingMeal.name,
+    calories: state.pendingMeal.calories,
+    protein: state.pendingMeal.protein,
+    carbs: state.pendingMeal.carbs,
+    fat: state.pendingMeal.fat,
+    image: state.pendingMeal.image,
+    time: new Date().toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' })
+  });
+  clearImages();
+  showView('dashboard');
+  toast('Meal logged!');
 }
 
 function saveCurrentMeal() {
   if (!state.pendingMeal) return;
-  const name = prompt('Save as:', state.pendingMeal.name);
+  const name = prompt('Save this meal as:', state.pendingMeal.name);
   if (!name) return;
-  state.saved.push({ id: Date.now(), name, calories: state.pendingMeal.calories, protein: state.pendingMeal.protein, carbs: state.pendingMeal.carbs, fat: state.pendingMeal.fat, image: state.pendingMeal.image });
+  state.saved.push({
+    id: Date.now(), name,
+    calories: state.pendingMeal.calories,
+    protein: state.pendingMeal.protein,
+    carbs: state.pendingMeal.carbs,
+    fat: state.pendingMeal.fat,
+    image: state.pendingMeal.image
+  });
   saveState(); toast('Saved!');
 }
 
@@ -494,21 +634,33 @@ function logManual() {
   const name = document.getElementById('manual-name').value.trim();
   const cals = parseInt(document.getElementById('manual-cals').value);
   if (!name || isNaN(cals)) { toast('Please enter a name and calories'); return; }
-  addEntry(state.currentDate, { name, calories: cals, protein: parseInt(document.getElementById('manual-protein').value)||0, carbs: parseInt(document.getElementById('manual-carbs').value)||0, fat: parseInt(document.getElementById('manual-fat').value)||0, time: new Date().toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit'}) });
+  addEntry(state.currentDate, {
+    name, calories: cals,
+    protein: parseInt(document.getElementById('manual-protein').value) || 0,
+    carbs:   parseInt(document.getElementById('manual-carbs').value)   || 0,
+    fat:     parseInt(document.getElementById('manual-fat').value)     || 0,
+    time: new Date().toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' })
+  });
   ['manual-name','manual-cals','manual-protein','manual-carbs','manual-fat'].forEach(id => document.getElementById(id).value = '');
   toast('Logged!');
 }
 
+// ─────────────────────────────────────────
+// SAVED MEALS
+// ─────────────────────────────────────────
 function renderSaved() {
   const el = document.getElementById('saved-grid');
-  if (!state.saved.length) { el.innerHTML = '<div class="empty" style="grid-column:1/-1"><div class="icon">♡</div><p>No saved meals yet.<br>Analyse a photo and click "Save meal".</p></div>'; return; }
+  if (!state.saved.length) {
+    el.innerHTML = '<div class="empty" style="grid-column:1/-1"><div class="icon">♡</div><p>No saved meals yet.<br>Analyse a photo and click "Save meal".</p></div>';
+    return;
+  }
   el.innerHTML = state.saved.map((m, i) => `
     <div class="saved-meal-card">
       <div class="saved-meal-img">${m.image ? '<img src="' + m.image + '" alt="">' : '🍽'}</div>
       <div class="saved-meal-info">
         <div class="saved-meal-name">${esc(m.name)}</div>
         <div class="saved-meal-cals">${Math.round(m.calories)} kcal</div>
-        ${m.protein ? '<div class="saved-meal-cals">P:' + Math.round(m.protein) + 'g C:' + Math.round(m.carbs) + 'g F:' + Math.round(m.fat) + 'g</div>' : ''}
+        ${m.protein ? '<div class="saved-meal-cals">P:' + Math.round(m.protein) + 'g · C:' + Math.round(m.carbs) + 'g · F:' + Math.round(m.fat) + 'g</div>' : ''}
         <div class="saved-meal-actions">
           <button onclick="quickLog(${i})">+ Log now</button>
           <button class="del-btn" onclick="deleteSaved(${i})">✕ Delete</button>
@@ -519,7 +671,12 @@ function renderSaved() {
 
 function quickLog(i) {
   const m = state.saved[i];
-  addEntry(state.currentDate, { name: m.name, calories: m.calories, protein: m.protein||0, carbs: m.carbs||0, fat: m.fat||0, image: m.image||null, time: new Date().toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit'}) });
+  addEntry(state.currentDate, {
+    name: m.name, calories: m.calories,
+    protein: m.protein || 0, carbs: m.carbs || 0, fat: m.fat || 0,
+    image: m.image || null,
+    time: new Date().toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' })
+  });
   toast(m.name + ' logged!');
 }
 
@@ -528,6 +685,9 @@ function deleteSaved(i) {
   state.saved.splice(i, 1); saveState(); renderSaved(); toast('Deleted');
 }
 
+// ─────────────────────────────────────────
+// HISTORY
+// ─────────────────────────────────────────
 function renderHistory() {
   const el = document.getElementById('history-list');
   const dates = Object.keys(state.log).sort((a,b) => b.localeCompare(a)).slice(0, 30);
@@ -535,32 +695,69 @@ function renderHistory() {
   el.innerHTML = dates.map(date => {
     const entries = state.log[date], t = calcTotals(entries);
     return `<div class="history-day">
-      <div class="history-day-header"><h3>${fmtDate(date)}</h3><span>${Math.round(t.calories)} kcal &middot; P:${Math.round(t.protein)}g C:${Math.round(t.carbs)}g F:${Math.round(t.fat)}g</span></div>
+      <div class="history-day-header">
+        <h3>${fmtDate(date)}</h3>
+        <span>${Math.round(t.calories)} kcal · P:${Math.round(t.protein)}g C:${Math.round(t.carbs)}g F:${Math.round(t.fat)}g</span>
+      </div>
       <div class="card" style="padding:0 1.25rem">
-        ${entries.map(e => `<div class="log-entry"><div class="log-thumb">${e.image ? '<img src="' + e.image + '" alt="">' : '🍽'}</div><div class="log-info"><div class="log-name">${esc(e.name)}</div><div class="log-meta">${e.time||''}</div></div><div class="log-cals">${Math.round(e.calories)}</div></div>`).join('')}
-      </div></div>`;
+        ${entries.map(e => `
+          <div class="log-entry">
+            <div class="log-thumb">${e.image ? '<img src="' + e.image + '" alt="">' : '🍽'}</div>
+            <div class="log-info">
+              <div class="log-name">${esc(e.name)}</div>
+              <div class="log-meta">${e.time || ''}</div>
+            </div>
+            <div class="log-cals">${Math.round(e.calories)}</div>
+          </div>`).join('')}
+      </div>
+    </div>`;
   }).join('');
 }
 
+// ─────────────────────────────────────────
+// GOALS
+// ─────────────────────────────────────────
 function renderGoals() {
   const g = state.goals;
-  document.getElementById('goal-cals').value = g.calories;
+  document.getElementById('goal-cals').value    = g.calories;
   document.getElementById('goal-protein').value = g.protein;
-  document.getElementById('goal-carbs').value = g.carbs;
-  document.getElementById('goal-fat').value = g.fat;
+  document.getElementById('goal-carbs').value   = g.carbs;
+  document.getElementById('goal-fat').value      = g.fat;
 }
 
 function saveGoals() {
-  state.goals = { calories: parseInt(document.getElementById('goal-cals').value)||2000, protein: parseInt(document.getElementById('goal-protein').value)||150, carbs: parseInt(document.getElementById('goal-carbs').value)||250, fat: parseInt(document.getElementById('goal-fat').value)||70 };
+  state.goals = {
+    calories: parseInt(document.getElementById('goal-cals').value)    || 2000,
+    protein:  parseInt(document.getElementById('goal-protein').value) || 150,
+    carbs:    parseInt(document.getElementById('goal-carbs').value)   || 250,
+    fat:      parseInt(document.getElementById('goal-fat').value)     || 70
+  };
   saveState(); toast('Goals saved!');
 }
 
+// ─────────────────────────────────────────
+// API KEY
+// ─────────────────────────────────────────
 function saveApiKey(val) {
   state.apiKey = val.trim(); saveState();
-  const s = document.getElementById('api-status');
-  if (val.startsWith('sk-ant-')) { s.textContent = '✓ Key saved'; s.className = 'api-status ok'; }
-  else if (val.length > 5) { s.textContent = '⚠ Unusual key format'; s.className = 'api-status err'; }
-  else { s.textContent = 'Enter your key to enable AI'; s.className = 'api-status'; }
+  const msg = val.startsWith('sk-ant-') ? '✓ Key saved' : val.length > 5 ? '⚠ Unusual key format' : 'Enter your key to enable AI';
+  const cls = val.startsWith('sk-ant-') ? 'api-st ok' : val.length > 5 ? 'api-st err' : 'api-st';
+  ['api-status', 'mobile-api-status'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) { el.textContent = msg; el.className = cls; }
+  });
+  // Sync both inputs
+  const desk = document.getElementById('api-key-input');
+  const mob  = document.getElementById('mobile-api-input');
+  if (desk && desk !== document.activeElement) desk.value = val;
+  if (mob  && mob  !== document.activeElement) mob.value  = val;
+}
+
+// ─────────────────────────────────────────
+// UTILS
+// ─────────────────────────────────────────
+function esc(s) {
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 }
 
 function toast(msg) {
@@ -569,9 +766,15 @@ function toast(msg) {
   setTimeout(() => t.classList.remove('show'), 2500);
 }
 
+// ─────────────────────────────────────────
+// INIT
+// ─────────────────────────────────────────
 loadState();
-document.getElementById('api-key-input').value = state.apiKey || '';
-if (state.apiKey) saveApiKey(state.apiKey);
+if (state.apiKey) {
+  document.getElementById('api-key-input').value   = state.apiKey;
+  document.getElementById('mobile-api-input').value = state.apiKey;
+  saveApiKey(state.apiKey);
+}
 renderDashboard();
 </script>
 </body>
