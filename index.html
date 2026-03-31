@@ -196,7 +196,7 @@ body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--t
         <p style="font-size:13px;color:var(--muted);margin-top:3px">Take or upload a photo — Claude will estimate the calories</p>
       </div>
       <div class="upload-zone" id="upload-zone" onclick="document.getElementById('file-input').click()" ondragover="handleDrag(event,true)" ondragleave="handleDrag(event,false)" ondrop="handleDrop(event)">
-        <input type="file" id="file-input" accept="image/*" capture="environment" onchange="handleFileSelect(event)">
+        <input type="file" id="file-input" accept="image/*" onchange="handleFileSelect(event)">
         <div class="upload-icon">📷</div>
         <h3>Upload or take a photo</h3>
         <p>Drag &amp; drop, click to browse, or use your camera</p>
