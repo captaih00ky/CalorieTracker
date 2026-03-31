@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -23,148 +24,150 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
 .shell{display:flex;height:100vh;overflow:hidden}
 
 /* ── SIDEBAR ── */
-.sidebar{width:260px;flex-shrink:0;background:var(--surface);border-right:1px solid var(--border);display:flex;flex-direction:column;overflow-y:auto;padding-bottom:1.5rem}
+.sidebar{width:260px;flex-shrink:0;background:var(–surface);border-right:1px solid var(–border);display:flex;flex-direction:column;overflow-y:auto;padding-bottom:1.5rem}
 .main{flex:1;overflow-y:auto;padding:2rem}
-.logo{padding:1.5rem 1.25rem 1rem;border-bottom:1px solid var(--border);margin-bottom:.5rem}
-.logo h1{font-family:'DM Serif Display',serif;font-size:24px;color:var(--accent)}
-.logo p{font-size:11px;color:var(--muted);margin-top:2px;text-transform:uppercase;letter-spacing:.3px}
-.nav-section{padding:.75rem 1rem .25rem;font-size:10px;text-transform:uppercase;letter-spacing:.8px;color:var(--muted);font-weight:500}
-.nav-btn{display:flex;align-items:center;gap:10px;padding:.55rem 1.25rem;font-size:14px;color:var(--muted);cursor:pointer;border:none;background:none;width:100%;text-align:left;transition:color .15s,background .15s;font-family:'DM Sans',sans-serif}
-.nav-btn:hover{color:var(--text);background:var(--surface2)}
-.nav-btn.active{color:var(--accent);background:var(--accent-light);font-weight:500}
+.logo{padding:1.5rem 1.25rem 1rem;border-bottom:1px solid var(–border);margin-bottom:.5rem}
+.logo h1{font-family:‘DM Serif Display’,serif;font-size:24px;color:var(–accent)}
+.logo p{font-size:11px;color:var(–muted);margin-top:2px;text-transform:uppercase;letter-spacing:.3px}
+.nav-section{padding:.75rem 1rem .25rem;font-size:10px;text-transform:uppercase;letter-spacing:.8px;color:var(–muted);font-weight:500}
+.nav-btn{display:flex;align-items:center;gap:10px;padding:.55rem 1.25rem;font-size:14px;color:var(–muted);cursor:pointer;border:none;background:none;width:100%;text-align:left;transition:color .15s,background .15s;font-family:‘DM Sans’,sans-serif}
+.nav-btn:hover{color:var(–text);background:var(–surface2)}
+.nav-btn.active{color:var(–accent);background:var(–accent-light);font-weight:500}
 .nav-btn .icon{width:18px;text-align:center;font-size:14px}
-.api-section{margin-top:auto;padding:1rem 1.25rem 0;border-top:1px solid var(--border)}
-.api-label{font-size:10px;text-transform:uppercase;letter-spacing:.8px;color:var(--muted);margin-bottom:.4rem;font-weight:500}
-.api-inp{width:100%;padding:.45rem .6rem;font-size:12px;border:1px solid var(--border);border-radius:var(--radius-sm);background:var(--surface2);color:var(--text);font-family:'DM Sans',sans-serif;outline:none}
-.api-inp:focus{border-color:var(--accent)}
-.api-st{font-size:11px;color:var(--muted);margin-top:4px}
-.api-st.ok{color:var(--accent)}.api-st.err{color:var(--danger)}
+.api-section{margin-top:auto;padding:1rem 1.25rem 0;border-top:1px solid var(–border)}
+.api-label{font-size:10px;text-transform:uppercase;letter-spacing:.8px;color:var(–muted);margin-bottom:.4rem;font-weight:500}
+.api-inp{width:100%;padding:.45rem .6rem;font-size:12px;border:1px solid var(–border);border-radius:var(–radius-sm);background:var(–surface2);color:var(–text);font-family:‘DM Sans’,sans-serif;outline:none}
+.api-inp:focus{border-color:var(–accent)}
+.api-st{font-size:11px;color:var(–muted);margin-top:4px}
+.api-st.ok{color:var(–accent)}.api-st.err{color:var(–danger)}
 
 /* ── SHARED ── */
 .view{display:none}.view.active{display:block}
 .page-header{margin-bottom:1.5rem}
-.page-header h2{font-family:'DM Serif Display',serif;font-size:26px;font-weight:400}
-.page-header p{font-size:13px;color:var(--muted);margin-top:3px}
-.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow)}
-.btn{display:inline-flex;align-items:center;gap:6px;padding:.55rem 1.1rem;font-size:13px;font-weight:500;border-radius:var(--radius-sm);border:1px solid var(--border);background:var(--surface);color:var(--text);cursor:pointer;font-family:'DM Sans',sans-serif;transition:background .15s;text-decoration:none}
-.btn:hover{background:var(--surface2)}
-.btn-primary{background:var(--accent);border-color:var(--accent);color:#fff}
+.page-header h2{font-family:‘DM Serif Display’,serif;font-size:26px;font-weight:400}
+.page-header p{font-size:13px;color:var(–muted);margin-top:3px}
+.card{background:var(–surface);border:1px solid var(–border);border-radius:var(–radius);box-shadow:var(–shadow)}
+.btn{display:inline-flex;align-items:center;gap:6px;padding:.55rem 1.1rem;font-size:13px;font-weight:500;border-radius:var(–radius-sm);border:1px solid var(–border);background:var(–surface);color:var(–text);cursor:pointer;font-family:‘DM Sans’,sans-serif;transition:background .15s;text-decoration:none}
+.btn:hover{background:var(–surface2)}
+.btn-primary{background:var(–accent);border-color:var(–accent);color:#fff}
 .btn-primary:hover{opacity:.9}
 .btn-primary:disabled{opacity:.5;cursor:not-allowed}
 .btn-row{display:flex;gap:.5rem;flex-wrap:wrap}
 .field{margin-bottom:1rem}
-.field label{display:block;font-size:12px;color:var(--muted);margin-bottom:.3rem;font-weight:500;text-transform:uppercase;letter-spacing:.4px}
-.field input{width:100%;padding:.55rem .75rem;font-size:14px;border:1px solid var(--border);border-radius:var(--radius-sm);background:var(--surface);color:var(--text);font-family:'DM Sans',sans-serif;outline:none;transition:border-color .15s}
-.field input:focus{border-color:var(--accent)}
-.empty{text-align:center;padding:3rem 1.5rem;color:var(--muted)}
+.field label{display:block;font-size:12px;color:var(–muted);margin-bottom:.3rem;font-weight:500;text-transform:uppercase;letter-spacing:.4px}
+.field input{width:100%;padding:.55rem .75rem;font-size:14px;border:1px solid var(–border);border-radius:var(–radius-sm);background:var(–surface);color:var(–text);font-family:‘DM Sans’,sans-serif;outline:none;transition:border-color .15s}
+.field input:focus{border-color:var(–accent)}
+.empty{text-align:center;padding:3rem 1.5rem;color:var(–muted)}
 .empty .icon{font-size:40px;margin-bottom:1rem}
 .empty p{font-size:14px}
 
 /* ── DASHBOARD ── */
 .date-nav{display:flex;align-items:center;gap:.75rem;margin-bottom:1.5rem}
-.date-nav button{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-sm);padding:.4rem .75rem;font-size:13px;cursor:pointer;color:var(--text);font-family:'DM Sans',sans-serif;transition:background .15s}
-.date-nav button:hover{background:var(--surface2)}
+.date-nav button{background:var(–surface);border:1px solid var(–border);border-radius:var(–radius-sm);padding:.4rem .75rem;font-size:13px;cursor:pointer;color:var(–text);font-family:‘DM Sans’,sans-serif;transition:background .15s}
+.date-nav button:hover{background:var(–surface2)}
 .date-nav .date-label{font-size:15px;font-weight:500;min-width:140px;text-align:center}
 .stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:1rem;margin-bottom:1.5rem}
-.stat-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:1rem 1.25rem}
-.stat-label{font-size:11px;text-transform:uppercase;letter-spacing:.5px;color:var(--muted);font-weight:500}
-.stat-value{font-family:'DM Serif Display',serif;font-size:28px;margin-top:2px}
-.stat-sub{font-size:11px;color:var(--muted);margin-top:2px}
-.cal-bar-wrap{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:1rem 1.25rem;margin-bottom:1.5rem}
+.stat-card{background:var(–surface);border:1px solid var(–border);border-radius:var(–radius);padding:1rem 1.25rem}
+.stat-label{font-size:11px;text-transform:uppercase;letter-spacing:.5px;color:var(–muted);font-weight:500}
+.stat-value{font-family:‘DM Serif Display’,serif;font-size:28px;margin-top:2px}
+.stat-sub{font-size:11px;color:var(–muted);margin-top:2px}
+.cal-bar-wrap{background:var(–surface);border:1px solid var(–border);border-radius:var(–radius);padding:1rem 1.25rem;margin-bottom:1.5rem}
 .cal-bar-head{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:.6rem}
-.cal-bar-head span{font-size:13px;color:var(--muted)}.cal-bar-head strong{font-size:13px}
-.cal-bar-track{height:8px;background:var(--surface2);border-radius:99px;overflow:hidden}
-.cal-bar-fill{height:100%;border-radius:99px;background:var(--accent);transition:width .4s ease,background .3s}
+.cal-bar-head span{font-size:13px;color:var(–muted)}.cal-bar-head strong{font-size:13px}
+.cal-bar-track{height:8px;background:var(–surface2);border-radius:99px;overflow:hidden}
+.cal-bar-fill{height:100%;border-radius:99px;background:var(–accent);transition:width .4s ease,background .3s}
 .log-section-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:.75rem}
 .log-section-header h3{font-size:14px;font-weight:500}
-.log-entry{display:flex;align-items:center;gap:.75rem;padding:.75rem 0;border-bottom:1px solid var(--border)}
+.log-entry{display:flex;align-items:center;gap:.75rem;padding:.75rem 0;border-bottom:1px solid var(–border)}
 .log-entry:last-child{border-bottom:none}
-.log-thumb{width:48px;height:48px;border-radius:var(--radius-sm);background:var(--surface2);flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:20px;color:var(--muted);overflow:hidden}
+.log-thumb{width:48px;height:48px;border-radius:var(–radius-sm);background:var(–surface2);flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:20px;color:var(–muted);overflow:hidden}
 .log-thumb img{width:100%;height:100%;object-fit:cover}
 .log-info{flex:1;min-width:0}
 .log-name{font-size:14px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.log-meta{font-size:12px;color:var(--muted)}
-.log-cals{font-family:'DM Serif Display',serif;font-size:18px;flex-shrink:0}
-.log-del{background:none;border:none;color:var(--muted);cursor:pointer;font-size:14px;padding:4px;border-radius:4px;transition:color .15s;flex-shrink:0}
-.log-del:hover{color:var(--danger)}
+.log-meta{font-size:12px;color:var(–muted)}
+.log-cals{font-family:‘DM Serif Display’,serif;font-size:18px;flex-shrink:0}
+.log-del{background:none;border:none;color:var(–muted);cursor:pointer;font-size:14px;padding:4px;border-radius:4px;transition:color .15s;flex-shrink:0}
+.log-del:hover{color:var(–danger)}
 
 /* ── UPLOAD / LOG MEAL ── */
-.upload-zone{border:2px dashed var(--border);border-radius:var(--radius);padding:2.5rem;text-align:center;cursor:pointer;transition:border-color .2s,background .2s;background:var(--surface);margin-bottom:1.5rem}
-.upload-zone:hover,.upload-zone.drag{border-color:var(--accent);background:var(--accent-light)}
+.upload-zone{border:2px dashed var(–border);border-radius:var(–radius);padding:2.5rem;text-align:center;cursor:pointer;transition:border-color .2s,background .2s;background:var(–surface);margin-bottom:1.5rem}
+.upload-zone:hover,.upload-zone.drag{border-color:var(–accent);background:var(–accent-light)}
 .upload-zone .upload-icon{font-size:36px;margin-bottom:.75rem}
 .upload-zone h3{font-size:15px;font-weight:500;margin-bottom:.25rem}
-.upload-zone p{font-size:13px;color:var(--muted)}
+.upload-zone p{font-size:13px;color:var(–muted)}
 #file-input{display:none}
 
 /* multi-image strip */
 .img-strip{display:flex;gap:.6rem;flex-wrap:wrap;margin-bottom:1.5rem}
 .img-thumb-wrap{position:relative;width:90px;height:90px;flex-shrink:0}
-.img-thumb-wrap img{width:100%;height:100%;object-fit:cover;border-radius:var(--radius-sm);border:1px solid var(--border);display:block}
-.img-thumb-remove{position:absolute;top:-6px;right:-6px;width:20px;height:20px;border-radius:50%;background:var(--danger);color:#fff;border:none;cursor:pointer;font-size:11px;display:flex;align-items:center;justify-content:center;line-height:1}
-.add-more-btn{width:90px;height:90px;border:2px dashed var(--border);border-radius:var(--radius-sm);background:none;cursor:pointer;color:var(--muted);font-size:24px;display:flex;align-items:center;justify-content:center;transition:border-color .2s,color .2s;flex-shrink:0}
-.add-more-btn:hover{border-color:var(--accent);color:var(--accent)}
+.img-thumb-wrap img{width:100%;height:100%;object-fit:cover;border-radius:var(–radius-sm);border:1px solid var(–border);display:block}
+.img-thumb-remove{position:absolute;top:-6px;right:-6px;width:20px;height:20px;border-radius:50%;background:var(–danger);color:#fff;border:none;cursor:pointer;font-size:11px;display:flex;align-items:center;justify-content:center;line-height:1}
+.add-more-btn{width:90px;height:90px;border:2px dashed var(–border);border-radius:var(–radius-sm);background:none;cursor:pointer;color:var(–muted);font-size:24px;display:flex;align-items:center;justify-content:center;transition:border-color .2s,color .2s;flex-shrink:0}
+.add-more-btn:hover{border-color:var(–accent);color:var(–accent)}
 
-.result-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:1.25rem;margin-bottom:1rem;display:none}
+.result-card{background:var(–surface);border:1px solid var(–border);border-radius:var(–radius);padding:1.25rem;margin-bottom:1rem;display:none}
 .result-card h3{font-size:16px;font-weight:500;margin-bottom:.25rem}
-.result-cals{font-family:'DM Serif Display',serif;font-size:32px;color:var(--accent)}
-.result-cals span{font-family:'DM Sans',sans-serif;font-size:14px;color:var(--muted);font-weight:400}
-.result-note{font-size:13px;color:var(--muted);margin-top:.5rem;line-height:1.5}
+.result-cals{font-family:‘DM Serif Display’,serif;font-size:32px;color:var(–accent)}
+.result-cals span{font-family:‘DM Sans’,sans-serif;font-size:14px;color:var(–muted);font-weight:400}
+.result-note{font-size:13px;color:var(–muted);margin-top:.5rem;line-height:1.5}
 .macro-row{display:flex;gap:.75rem;margin-top:.75rem;flex-wrap:wrap}
-.macro-pill{background:var(--surface2);border-radius:99px;padding:3px 12px;font-size:12px;color:var(--muted)}
-.macro-pill strong{color:var(--text)}
-.loading-bar{height:3px;background:var(--surface2);border-radius:99px;overflow:hidden;margin:1rem 0;display:none}
-.loading-bar-fill{height:100%;width:35%;background:var(--accent);border-radius:99px;animation:slide 1.4s ease-in-out infinite}
+.macro-pill{background:var(–surface2);border-radius:99px;padding:3px 12px;font-size:12px;color:var(–muted)}
+.macro-pill strong{color:var(–text)}
+.loading-bar{height:3px;background:var(–surface2);border-radius:99px;overflow:hidden;margin:1rem 0;display:none}
+.loading-bar-fill{height:100%;width:35%;background:var(–accent);border-radius:99px;animation:slide 1.4s ease-in-out infinite}
 @keyframes slide{0%{transform:translateX(-100%)}100%{transform:translateX(400%)}}
 .inline-form{display:flex;gap:.5rem;align-items:flex-end;flex-wrap:wrap}
 .inline-form .field{margin-bottom:0;flex:1;min-width:110px}
 
 /* ── SAVED ── */
 .saved-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:1rem}
-.saved-meal-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;transition:box-shadow .15s,transform .15s}
-.saved-meal-card:hover{box-shadow:var(--shadow);transform:translateY(-2px)}
-.saved-meal-img{height:120px;background:var(--surface2);display:flex;align-items:center;justify-content:center;font-size:36px;overflow:hidden}
+.saved-meal-card{background:var(–surface);border:1px solid var(–border);border-radius:var(–radius);overflow:hidden;transition:box-shadow .15s,transform .15s}
+.saved-meal-card:hover{box-shadow:var(–shadow);transform:translateY(-2px)}
+.saved-meal-img{height:120px;background:var(–surface2);display:flex;align-items:center;justify-content:center;font-size:36px;overflow:hidden}
 .saved-meal-img img{width:100%;height:100%;object-fit:cover}
 .saved-meal-info{padding:.75rem}
 .saved-meal-name{font-size:14px;font-weight:500}
-.saved-meal-cals{font-size:12px;color:var(--muted);margin-top:2px}
+.saved-meal-cals{font-size:12px;color:var(–muted);margin-top:2px}
 .saved-meal-actions{display:flex;gap:.4rem;margin-top:.6rem}
-.saved-meal-actions button{flex:1;padding:.3rem;font-size:11px;border:1px solid var(--border);border-radius:6px;background:var(--surface2);cursor:pointer;color:var(--text);font-family:'DM Sans',sans-serif;transition:background .15s}
-.saved-meal-actions button:hover{background:var(--accent-light);color:var(--accent)}
-.saved-meal-actions .del-btn:hover{background:#fee;color:var(--danger)}
+.saved-meal-actions button{flex:1;padding:.3rem;font-size:11px;border:1px solid var(–border);border-radius:6px;background:var(–surface2);cursor:pointer;color:var(–text);font-family:‘DM Sans’,sans-serif;transition:background .15s}
+.saved-meal-actions button:hover{background:var(–accent-light);color:var(–accent)}
+.saved-meal-actions .del-btn:hover{background:#fee;color:var(–danger)}
 
 /* ── HISTORY ── */
 .history-day{margin-bottom:1.5rem}
-.history-day-header{display:flex;justify-content:space-between;align-items:baseline;padding-bottom:.5rem;border-bottom:1px solid var(--border);margin-bottom:.5rem}
+.history-day-header{display:flex;justify-content:space-between;align-items:baseline;padding-bottom:.5rem;border-bottom:1px solid var(–border);margin-bottom:.5rem}
 .history-day-header h3{font-size:14px;font-weight:500}
-.history-day-header span{font-size:13px;color:var(--muted)}
+.history-day-header span{font-size:13px;color:var(–muted)}
 
 /* ── GOALS ── */
 .settings-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1.25rem}
 
 /* ── TOAST ── */
-.toast{position:fixed;bottom:1.5rem;right:1.5rem;background:var(--text);color:var(--bg);padding:.6rem 1.1rem;border-radius:var(--radius-sm);font-size:13px;font-weight:500;z-index:1000;opacity:0;transform:translateY(8px);transition:opacity .2s,transform .2s;pointer-events:none}
+.toast{position:fixed;bottom:1.5rem;right:1.5rem;background:var(–text);color:var(–bg);padding:.6rem 1.1rem;border-radius:var(–radius-sm);font-size:13px;font-weight:500;z-index:1000;opacity:0;transform:translateY(8px);transition:opacity .2s,transform .2s;pointer-events:none}
 .toast.show{opacity:1;transform:translateY(0)}
 
 /* ── MOBILE ── */
-.mobile-api-box{display:none;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:1rem 1.25rem;margin-bottom:1.5rem}
-.mobile-api-box .api-label{display:block;font-size:11px;text-transform:uppercase;letter-spacing:.8px;color:var(--muted);margin-bottom:.4rem;font-weight:500}
+.mobile-api-box{display:none;background:var(–surface);border:1px solid var(–border);border-radius:var(–radius);padding:1rem 1.25rem;margin-bottom:1.5rem}
+.mobile-api-box .api-label{display:block;font-size:11px;text-transform:uppercase;letter-spacing:.8px;color:var(–muted);margin-bottom:.4rem;font-weight:500}
 .mobile-api-box .api-inp{font-size:14px;padding:.55rem .75rem}
 
 @media(max-width:500px){
-  .shell{flex-direction:column}
-  .sidebar{width:100%;flex-direction:row;overflow-x:auto;overflow-y:hidden;padding:0;border-right:none;border-bottom:1px solid var(--border);height:auto;flex-shrink:0}
-  .logo,.nav-section,.api-section{display:none}
-  .nav-btn{padding:.75rem 1rem;white-space:nowrap;font-size:12px}
-  .main{padding:1.25rem;height:calc(100vh - 52px);overflow-y:auto}
-  .settings-grid{grid-template-columns:1fr}
-  .mobile-api-box{display:block}
+.shell{flex-direction:column}
+.sidebar{width:100%;flex-direction:row;overflow-x:auto;overflow-y:hidden;padding:0;border-right:none;border-bottom:1px solid var(–border);height:auto;flex-shrink:0}
+.logo,.nav-section,.api-section{display:none}
+.nav-btn{padding:.75rem 1rem;white-space:nowrap;font-size:12px}
+.main{padding:1.25rem;height:calc(100vh - 52px);overflow-y:auto}
+.settings-grid{grid-template-columns:1fr}
+.mobile-api-box{display:block}
 }
 </style>
+
 </head>
 <body>
 <div class="shell">
 
   <!-- SIDEBAR -->
+
   <aside class="sidebar">
     <div class="logo">
       <h1>kcal</h1>
@@ -185,144 +188,147 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
   </aside>
 
   <!-- MAIN -->
+
   <main class="main">
 
-    <!-- ── DASHBOARD ── -->
-    <div id="view-dashboard" class="view active">
-      <div class="page-header">
-        <h2>Today's intake</h2>
-        <p id="dash-date"></p>
-      </div>
+```
+<!-- ── DASHBOARD ── -->
+<div id="view-dashboard" class="view active">
+  <div class="page-header">
+    <h2>Today's intake</h2>
+    <p id="dash-date"></p>
+  </div>
 
-      <!-- Mobile API box (only visible on small screens via CSS) -->
-      <div class="mobile-api-box">
-        <label class="api-label">Anthropic API Key</label>
-        <input class="api-inp" type="password" id="mobile-api-input" placeholder="sk-ant-..." oninput="saveApiKey(this.value)">
-        <div class="api-st" id="mobile-api-status">Enter your key to enable AI photo analysis</div>
-      </div>
+  <!-- Mobile API box (only visible on small screens via CSS) -->
+  <div class="mobile-api-box">
+    <label class="api-label">Anthropic API Key</label>
+    <input class="api-inp" type="password" id="mobile-api-input" placeholder="sk-ant-..." oninput="saveApiKey(this.value)">
+    <div class="api-st" id="mobile-api-status">Enter your key to enable AI photo analysis</div>
+  </div>
 
-      <div class="date-nav">
-        <button onclick="changeDay(-1)">← Prev</button>
-        <span class="date-label" id="nav-date-label"></span>
-        <button onclick="changeDay(1)">Next →</button>
-      </div>
-      <div class="stats-grid">
-        <div class="stat-card"><div class="stat-label">Calories</div><div class="stat-value" id="stat-cals">0</div><div class="stat-sub" id="stat-cals-goal">of 2000 goal</div></div>
-        <div class="stat-card"><div class="stat-label">Protein</div><div class="stat-value" id="stat-protein">0g</div><div class="stat-sub">macro</div></div>
-        <div class="stat-card"><div class="stat-label">Carbs</div><div class="stat-value" id="stat-carbs">0g</div><div class="stat-sub">macro</div></div>
-        <div class="stat-card"><div class="stat-label">Fat</div><div class="stat-value" id="stat-fat">0g</div><div class="stat-sub">macro</div></div>
-      </div>
-      <div class="cal-bar-wrap">
-        <div class="cal-bar-head"><span>Daily progress</span><strong id="bar-label">0 / 2000 kcal</strong></div>
-        <div class="cal-bar-track"><div class="cal-bar-fill" id="cal-bar" style="width:0%"></div></div>
-      </div>
-      <div class="card" style="padding:1.25rem">
-        <div class="log-section-header">
-          <h3>Meals logged</h3>
-          <button class="btn" onclick="showView('log')">+ Add meal</button>
-        </div>
-        <div id="today-log"></div>
-      </div>
+  <div class="date-nav">
+    <button onclick="changeDay(-1)">← Prev</button>
+    <span class="date-label" id="nav-date-label"></span>
+    <button onclick="changeDay(1)">Next →</button>
+  </div>
+  <div class="stats-grid">
+    <div class="stat-card"><div class="stat-label">Calories</div><div class="stat-value" id="stat-cals">0</div><div class="stat-sub" id="stat-cals-goal">of 2000 goal</div></div>
+    <div class="stat-card"><div class="stat-label">Protein</div><div class="stat-value" id="stat-protein">0g</div><div class="stat-sub">macro</div></div>
+    <div class="stat-card"><div class="stat-label">Carbs</div><div class="stat-value" id="stat-carbs">0g</div><div class="stat-sub">macro</div></div>
+    <div class="stat-card"><div class="stat-label">Fat</div><div class="stat-value" id="stat-fat">0g</div><div class="stat-sub">macro</div></div>
+  </div>
+  <div class="cal-bar-wrap">
+    <div class="cal-bar-head"><span>Daily progress</span><strong id="bar-label">0 / 2000 kcal</strong></div>
+    <div class="cal-bar-track"><div class="cal-bar-fill" id="cal-bar" style="width:0%"></div></div>
+  </div>
+  <div class="card" style="padding:1.25rem">
+    <div class="log-section-header">
+      <h3>Meals logged</h3>
+      <button class="btn" onclick="showView('log')">+ Add meal</button>
     </div>
+    <div id="today-log"></div>
+  </div>
+</div>
 
-    <!-- ── LOG MEAL ── -->
-    <div id="view-log" class="view">
-      <div class="page-header">
-        <h2>Log a meal</h2>
-        <p>Upload one or more photos — Claude analyses them together</p>
-      </div>
+<!-- ── LOG MEAL ── -->
+<div id="view-log" class="view">
+  <div class="page-header">
+    <h2>Log a meal</h2>
+    <p>Upload one or more photos — Claude analyses them together</p>
+  </div>
 
-      <!-- Upload zone (shown when no images yet) -->
-      <div class="upload-zone" id="upload-zone"
-           onclick="document.getElementById('file-input').click()"
-           ondragover="handleDrag(event,true)" ondragleave="handleDrag(event,false)" ondrop="handleDrop(event)">
-        <input type="file" id="file-input" accept="image/*" multiple onchange="handleFileSelect(event)">
-        <div class="upload-icon">📷</div>
-        <h3>Upload photos of your meal</h3>
-        <p>Drag &amp; drop, click to browse, or select multiple files<br>Great for meals spread across several dishes</p>
-      </div>
+  <!-- Upload zone (shown when no images yet) -->
+  <div class="upload-zone" id="upload-zone"
+       onclick="document.getElementById('file-input').click()"
+       ondragover="handleDrag(event,true)" ondragleave="handleDrag(event,false)" ondrop="handleDrop(event)">
+    <input type="file" id="file-input" accept="image/*" multiple onchange="handleFileSelect(event)">
+    <div class="upload-icon">📷</div>
+    <h3>Upload photos of your meal</h3>
+    <p>Drag &amp; drop, click to browse, or select multiple files<br>Great for meals spread across several dishes</p>
+  </div>
 
-      <!-- Image strip (shown after images added) -->
-      <div id="img-strip-wrap" style="display:none;margin-bottom:1.5rem">
-        <div class="img-strip" id="img-strip"></div>
-      </div>
+  <!-- Image strip (shown after images added) -->
+  <div id="img-strip-wrap" style="display:none;margin-bottom:1.5rem">
+    <div class="img-strip" id="img-strip"></div>
+  </div>
 
-      <div class="field" id="context-field" style="display:none">
-        <label>Add context (optional)</label>
-        <input type="text" id="meal-context" placeholder="e.g. large portion, added butter, restaurant meal…">
-      </div>
+  <div class="field" id="context-field" style="display:none">
+    <label>Add context (optional)</label>
+    <input type="text" id="meal-context" placeholder="e.g. large portion, added butter, restaurant meal…">
+  </div>
 
-      <div class="btn-row" id="analyze-row" style="display:none;margin-bottom:1rem">
-        <button class="btn btn-primary" id="analyze-btn" onclick="analyzeMeal()">✦ Analyse with AI</button>
-        <button class="btn" onclick="clearImages()">Clear all</button>
-      </div>
+  <div class="btn-row" id="analyze-row" style="display:none;margin-bottom:1rem">
+    <button class="btn btn-primary" id="analyze-btn" onclick="analyzeMeal()">✦ Analyse with AI</button>
+    <button class="btn" onclick="clearImages()">Clear all</button>
+  </div>
 
-      <div class="loading-bar" id="loading-bar"><div class="loading-bar-fill"></div></div>
+  <div class="loading-bar" id="loading-bar"><div class="loading-bar-fill"></div></div>
 
-      <div class="result-card" id="result-card">
-        <h3 id="result-name"></h3>
-        <div class="result-cals"><span id="result-cals-num"></span> <span>kcal</span></div>
-        <div class="macro-row">
-          <div class="macro-pill">Protein: <strong id="r-protein">—</strong></div>
-          <div class="macro-pill">Carbs: <strong id="r-carbs">—</strong></div>
-          <div class="macro-pill">Fat: <strong id="r-fat">—</strong></div>
-        </div>
-        <div class="result-note" id="result-note"></div>
-        <div class="btn-row" style="margin-top:1rem">
-          <button class="btn btn-primary" onclick="logCurrentMeal()">+ Log this meal</button>
-          <button class="btn" onclick="saveCurrentMeal()">♡ Save meal</button>
-          <button class="btn" onclick="editCalories()">✎ Edit</button>
-        </div>
-      </div>
-
-      <!-- Manual entry -->
-      <div style="margin-top:2rem;padding-top:1.5rem;border-top:1px solid var(--border)">
-        <h3 style="font-size:14px;font-weight:500;margin-bottom:.75rem">Or add manually</h3>
-        <div class="inline-form">
-          <div class="field"><label>Meal name</label><input type="text" id="manual-name" placeholder="Chicken sandwich"></div>
-          <div class="field" style="max-width:110px"><label>Calories</label><input type="number" id="manual-cals" placeholder="450" min="0"></div>
-          <div class="field" style="max-width:95px"><label>Protein (g)</label><input type="number" id="manual-protein" placeholder="0" min="0"></div>
-          <div class="field" style="max-width:95px"><label>Carbs (g)</label><input type="number" id="manual-carbs" placeholder="0" min="0"></div>
-          <div class="field" style="max-width:95px"><label>Fat (g)</label><input type="number" id="manual-fat" placeholder="0" min="0"></div>
-          <button class="btn btn-primary" onclick="logManual()" style="align-self:flex-end;margin-bottom:0">+ Log</button>
-        </div>
-      </div>
+  <div class="result-card" id="result-card">
+    <h3 id="result-name"></h3>
+    <div class="result-cals"><span id="result-cals-num"></span> <span>kcal</span></div>
+    <div class="macro-row">
+      <div class="macro-pill">Protein: <strong id="r-protein">—</strong></div>
+      <div class="macro-pill">Carbs: <strong id="r-carbs">—</strong></div>
+      <div class="macro-pill">Fat: <strong id="r-fat">—</strong></div>
     </div>
-
-    <!-- ── SAVED MEALS ── -->
-    <div id="view-saved" class="view">
-      <div class="page-header">
-        <h2>Saved meals</h2>
-        <p>Your frequently eaten meals for quick logging</p>
-      </div>
-      <div id="saved-grid" class="saved-grid"></div>
+    <div class="result-note" id="result-note"></div>
+    <div class="btn-row" style="margin-top:1rem">
+      <button class="btn btn-primary" onclick="logCurrentMeal()">+ Log this meal</button>
+      <button class="btn" onclick="saveCurrentMeal()">♡ Save meal</button>
+      <button class="btn" onclick="editCalories()">✎ Edit</button>
     </div>
+  </div>
 
-    <!-- ── HISTORY ── -->
-    <div id="view-history" class="view">
-      <div class="page-header">
-        <h2>History</h2>
-        <p>Your recent days</p>
-      </div>
-      <div id="history-list"></div>
+  <!-- Manual entry -->
+  <div style="margin-top:2rem;padding-top:1.5rem;border-top:1px solid var(--border)">
+    <h3 style="font-size:14px;font-weight:500;margin-bottom:.75rem">Or add manually</h3>
+    <div class="inline-form">
+      <div class="field"><label>Meal name</label><input type="text" id="manual-name" placeholder="Chicken sandwich"></div>
+      <div class="field" style="max-width:110px"><label>Calories</label><input type="number" id="manual-cals" placeholder="450" min="0"></div>
+      <div class="field" style="max-width:95px"><label>Protein (g)</label><input type="number" id="manual-protein" placeholder="0" min="0"></div>
+      <div class="field" style="max-width:95px"><label>Carbs (g)</label><input type="number" id="manual-carbs" placeholder="0" min="0"></div>
+      <div class="field" style="max-width:95px"><label>Fat (g)</label><input type="number" id="manual-fat" placeholder="0" min="0"></div>
+      <button class="btn btn-primary" onclick="logManual()" style="align-self:flex-end;margin-bottom:0">+ Log</button>
     </div>
+  </div>
+</div>
 
-    <!-- ── GOALS ── -->
-    <div id="view-goals" class="view">
-      <div class="page-header">
-        <h2>Goals &amp; settings</h2>
-        <p>Personalise your daily targets</p>
-      </div>
-      <div class="card" style="padding:1.5rem;max-width:520px">
-        <div class="settings-grid">
-          <div class="field"><label>Daily calorie goal</label><input type="number" id="goal-cals" placeholder="2000" min="500" max="5000"></div>
-          <div class="field"><label>Protein goal (g)</label><input type="number" id="goal-protein" placeholder="150" min="0"></div>
-          <div class="field"><label>Carbs goal (g)</label><input type="number" id="goal-carbs" placeholder="250" min="0"></div>
-          <div class="field"><label>Fat goal (g)</label><input type="number" id="goal-fat" placeholder="70" min="0"></div>
-        </div>
-        <button class="btn btn-primary" onclick="saveGoals()">Save goals</button>
-      </div>
+<!-- ── SAVED MEALS ── -->
+<div id="view-saved" class="view">
+  <div class="page-header">
+    <h2>Saved meals</h2>
+    <p>Your frequently eaten meals for quick logging</p>
+  </div>
+  <div id="saved-grid" class="saved-grid"></div>
+</div>
+
+<!-- ── HISTORY ── -->
+<div id="view-history" class="view">
+  <div class="page-header">
+    <h2>History</h2>
+    <p>Your recent days</p>
+  </div>
+  <div id="history-list"></div>
+</div>
+
+<!-- ── GOALS ── -->
+<div id="view-goals" class="view">
+  <div class="page-header">
+    <h2>Goals &amp; settings</h2>
+    <p>Personalise your daily targets</p>
+  </div>
+  <div class="card" style="padding:1.5rem;max-width:520px">
+    <div class="settings-grid">
+      <div class="field"><label>Daily calorie goal</label><input type="number" id="goal-cals" placeholder="2000" min="500" max="5000"></div>
+      <div class="field"><label>Protein goal (g)</label><input type="number" id="goal-protein" placeholder="150" min="0"></div>
+      <div class="field"><label>Carbs goal (g)</label><input type="number" id="goal-carbs" placeholder="250" min="0"></div>
+      <div class="field"><label>Fat goal (g)</label><input type="number" id="goal-fat" placeholder="70" min="0"></div>
     </div>
+    <button class="btn btn-primary" onclick="saveGoals()">Save goals</button>
+  </div>
+</div>
+```
 
   </main>
 </div>
@@ -467,12 +473,31 @@ function handleFileSelect(e) {
   e.target.value = ''; // reset so same file can be re-added
 }
 
+function resizeImage(dataUrl, maxPx, quality, cb) {
+  const img = new Image();
+  img.onload = () => {
+    let w = img.width, h = img.height;
+    if (w > maxPx || h > maxPx) {
+      if (w > h) { h = Math.round(h * maxPx / w); w = maxPx; }
+      else       { w = Math.round(w * maxPx / h); h = maxPx; }
+    }
+    const canvas = document.createElement('canvas');
+    canvas.width = w; canvas.height = h;
+    canvas.getContext('2d').drawImage(img, 0, 0, w, h);
+    cb(canvas.toDataURL('image/jpeg', quality));
+  };
+  img.src = dataUrl;
+}
+
 function addFiles(files) {
   files.forEach(file => {
     const reader = new FileReader();
     reader.onload = ev => {
-      state.pendingImages.push(ev.target.result);
-      renderImageStrip();
+      // Resize to max 1200px on longest side, JPEG quality 0.82
+      resizeImage(ev.target.result, 1200, 0.82, resized => {
+        state.pendingImages.push(resized);
+        renderImageStrip();
+      });
     };
     reader.readAsDataURL(file);
   });
@@ -777,5 +802,6 @@ if (state.apiKey) {
 }
 renderDashboard();
 </script>
+
 </body>
 </html>
