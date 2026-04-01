@@ -184,7 +184,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
       <div class="api-label">Anthropic API Key</div>
       <input class="api-inp" type="password" id="api-key-input" placeholder="sk-ant-..." oninput="saveApiKey(this.value)">
       <div class="api-st" id="api-status">Enter your key to enable AI</div>
-      <button onclick="testApiKey()" style="margin-top:6px;width:100%;padding:.35rem;font-size:11px;border:1px solid var(--border);border-radius:var(--radius-sm);background:var(--surface2);cursor:pointer;color:var(--text);font-family:DM Sans,sans-serif">Test key</button>
+      <button onclick="testApiKey()" style="margin-top:8px;width:100%;padding:.6rem;font-size:13px;font-weight:500;border:1px solid var(--border);border-radius:var(--radius-sm);background:var(--accent);cursor:pointer;color:#fff;font-family:DM Sans,sans-serif;min-height:44px">Test key</button>
     </div>
   </aside>
 
@@ -206,7 +206,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
     <input class="api-inp" type="password" id="mobile-api-input" placeholder="sk-ant-..." oninput="saveApiKey(this.value)">
     <div class="api-st" id="mobile-api-status">Enter your key to enable AI photo analysis</div>
   </div>
-    <button onclick="testApiKey()" style="margin-top:6px;width:100%;padding:.4rem;font-size:13px;border:1px solid var(--border);border-radius:var(--radius-sm);background:var(--surface2);cursor:pointer;color:var(--text);font-family:DM Sans,sans-serif">Test key</button>
+    <button onclick="testApiKey()" style="margin-top:8px;width:100%;padding:.7rem;font-size:15px;font-weight:500;border:1px solid var(--border);border-radius:var(--radius-sm);background:var(--accent);cursor:pointer;color:#fff;font-family:DM Sans,sans-serif;min-height:48px">Test key</button>
 
   <div class="date-nav">
     <button onclick="changeDay(-1)">← Prev</button>
@@ -579,7 +579,7 @@ Round all numbers to the nearest integer. Be realistic and accurate.`;
         'anthropic-dangerous-direct-browser-access': 'true'
       },
       body: JSON.stringify({
-        model: 'claude-opus-4-5',
+        model: 'claude-sonnet-4-6',
         max_tokens: 600,
         messages: [{ role: 'user', content }]
       })
@@ -794,7 +794,7 @@ async function testApiKey() {
         'anthropic-dangerous-direct-browser-access': 'true'
       },
       body: JSON.stringify({
-        model: 'claude-haiku-4-5',
+        model: 'claude-haiku-4-5-20251001',
         max_tokens: 10,
         messages: [{ role: 'user', content: 'Hi' }]
       })
@@ -828,7 +828,7 @@ function esc(s) {
 function toast(msg) {
   const t = document.getElementById('toast');
   t.textContent = msg; t.classList.add('show');
-  setTimeout(() => t.classList.remove('show'), 2500);
+  setTimeout(() => t.classList.remove('show'), 5000);
 }
 
 // ─────────────────────────────────────────
