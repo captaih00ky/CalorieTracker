@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 
 <html lang="en">
@@ -184,6 +185,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
       <div class="api-label">Anthropic API Key</div>
       <input class="api-inp" type="password" id="api-key-input" placeholder="sk-ant-..." oninput="saveApiKey(this.value)">
       <div class="api-st" id="api-status">Enter your key to enable AI</div>
+      <button onclick="testApiKey()" style="margin-top:6px;width:100%;padding:.35rem;font-size:11px;border:1px solid var(--border);border-radius:var(--radius-sm);background:var(--surface2);cursor:pointer;color:var(--text);font-family:DM Sans,sans-serif">Test key</button>
     </div>
   </aside>
 
@@ -205,6 +207,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
     <input class="api-inp" type="password" id="mobile-api-input" placeholder="sk-ant-..." oninput="saveApiKey(this.value)">
     <div class="api-st" id="mobile-api-status">Enter your key to enable AI photo analysis</div>
   </div>
+    <button onclick="testApiKey()" style="margin-top:6px;width:100%;padding:.4rem;font-size:13px;border:1px solid var(--border);border-radius:var(--radius-sm);background:var(--surface2);cursor:pointer;color:var(--text);font-family:DM Sans,sans-serif">Test key</button>
 
   <div class="date-nav">
     <button onclick="changeDay(-1)">← Prev</button>
@@ -764,18 +767,56 @@ function saveGoals() {
 // API KEY
 // ─────────────────────────────────────────
 function saveApiKey(val) {
-  state.apiKey = val.trim(); saveState();
-  const msg = val.startsWith('sk-ant-') ? '✓ Key saved' : val.length > 5 ? '⚠ Unusual key format' : 'Enter your key to enable AI';
-  const cls = val.startsWith('sk-ant-') ? 'api-st ok' : val.length > 5 ? 'api-st err' : 'api-st';
+  // Strip all whitespace/invisible chars that can sneak in on mobile
+  const cleaned = val.replace(/[\s\u200B-\u200D\uFEFF]/g, '');
+  state.apiKey = cleaned; saveState();
+  const msg = cleaned.startsWith('sk-ant-') ? '✓ Key saved — tap Test to verify' : cleaned.length > 5 ? '⚠ Unusual key format' : 'Enter your key to enable AI';
+  const cls = cleaned.startsWith('sk-ant-') ? 'api-st ok' : cleaned.length > 5 ? 'api-st err' : 'api-st';
   ['api-status', 'mobile-api-status'].forEach(id => {
     const el = document.getElementById(id);
     if (el) { el.textContent = msg; el.className = cls; }
   });
-  // Sync both inputs
   const desk = document.getElementById('api-key-input');
   const mob  = document.getElementById('mobile-api-input');
-  if (desk && desk !== document.activeElement) desk.value = val;
-  if (mob  && mob  !== document.activeElement) mob.value  = val;
+  if (desk && desk !== document.activeElement) desk.value = cleaned;
+  if (mob  && mob  !== document.activeElement) mob.value  = cleaned;
+}
+
+async function testApiKey() {
+  if (!state.apiKey) { toast('No key saved yet'); return; }
+  toast('Testing key…');
+  try {
+    const res = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'x-api-key': state.apiKey,
+        'anthropic-version': '2023-06-01',
+        'anthropic-dangerous-direct-browser-access': 'true'
+      },
+      body: JSON.stringify({
+        model: 'claude-haiku-4-5-20251001',
+        max_tokens: 10,
+        messages: [{ role: 'user', content: 'Hi' }]
+      })
+    });
+    const data = await res.json();
+    if (data.error) {
+      toast('❌ ' + data.error.message);
+      ['api-status','mobile-api-status'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) { el.textContent = '❌ ' + data.error.message; el.className = 'api-st err'; }
+      });
+    } else {
+      toast('✅ Key works!');
+      ['api-status','mobile-api-status'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) { el.textContent = '✅ Key verified and working'; el.className = 'api-st ok'; }
+      });
+    }
+  } catch(e) {
+    toast('Network error — check your connection');
+  }
 }
 
 // ─────────────────────────────────────────
